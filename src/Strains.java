@@ -12,8 +12,22 @@ public class Strains {
      * Example: "ACGT" -> "AGT" is 1 (delete C). "GATTACA" -> "GCATGCA" needs 3.
      */
     public static int editDistance(String a, String b) {
-        // TODO Mission 1
-        return -1;
+        int n = a.length(), m = b.length();
+        int[][] d = new int[n + 1][m + 1];
+
+        // border: turning i letters into nothing costs i, and nothing into j letters costs j
+        for (int i = 0; i <= n; i++) d[i][0] = i;
+        for (int j = 0; j <= m; j++) d[0][j] = j;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                int replace = d[i - 1][j - 1] + (a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1);
+                int delete = d[i - 1][j] + 1;
+                int insert = d[i][j - 1] + 1;
+                d[i][j] = Math.min(replace, Math.min(delete, insert));
+            }
+        }
+        return d[n][m];
     }
 
     /**
@@ -22,7 +36,18 @@ public class Strains {
      * Example: "ACGTT" and "AGTC": the longest is "AGT", length 3.
      */
     public static int lcsLength(String a, String b) {
-        // TODO Mission 2
-        return -1;
+        int n = a.length(), m = b.length();
+        int[][] l = new int[n + 1][m + 1]; // first row and column stay 0
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                    l[i][j] = l[i - 1][j - 1] + 1;
+                } else {
+                    l[i][j] = Math.max(l[i - 1][j], l[i][j - 1]);
+                }
+            }
+        }
+        return l[n][m];
     }
 }
