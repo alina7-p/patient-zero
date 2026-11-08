@@ -64,7 +64,41 @@ public class Marker {
      * Example: a = "ACGTAC", b = "TTACGT", k = 4: the words of a are ACGT, CGTA, GTAC; only ACGT is in b, so the answer is 1.
      */
     public static int sharedWords(String a, String b, int k) {
-        // TODO Mission 4
-        return -1;
+        int n = a.length(), m = b.length();
+        if (n < k || m < k) return 0;
+        final long MOD = 1_000_000_007L;
+        final long BASE = 131;
+
+        long top = 1;
+        for (int i = 1; i < k; i++) top = top * BASE % MOD;
+
+        Map<Long, List<Integer>> table = new HashMap<>();
+        long h = 0;
+        for (int i = 0; i < k; i++) h = (h * BASE + b.charAt(i)) % MOD;
+        for (int j = 0; ; j++) {
+            table.computeIfAbsent(h, x -> new ArrayList<>()).add(j);
+            if (j + k >= m) break;
+            h = (h - b.charAt(j) * top % MOD + MOD) % MOD;
+            h = (h * BASE + b.charAt(j + k)) % MOD;
+        }
+
+        int count = 0;
+        h = 0;
+        for (int i = 0; i < k; i++) h = (h * BASE + a.charAt(i)) % MOD;
+        for (int i = 0; ; i++) {
+            List<Integer> candidates = table.get(h);
+            if (candidates != null) {
+                for (int j : candidates) {
+                    if (a.regionMatches(i, b, j, k)) {
+                        count++;
+                        break;
+                    }
+                }
+            }
+            if (i + k >= n) break;
+            h = (h - a.charAt(i) * top % MOD + MOD) % MOD;
+            h = (h * BASE + a.charAt(i + k)) % MOD;
+        }
+        return count;
     }
 }
