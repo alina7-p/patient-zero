@@ -22,7 +22,8 @@ The 9 lines your program prints on your data (`java -cp out Main`):
 
 My outbreak report (a screenshot of `output/outbreak.html`):
 
-![Screenshot 2026-11-09 at 13.28.01.png](../../../../var/folders/47/68r_mq0d78x35hk23nh49hgm0000gn/T/TemporaryItems/NSIRD_screencaptureui_xOa4fg/Screenshot%202026-11-09%20at%2013.28.01.png)
+<img width="1419" height="821" alt="Screenshot 2026-11-09 at 13 50 06" src="https://github.com/user-attachments/assets/b8b70d77-7556-4a13-9a37-15891c384359" />
+
 
 ## Questions
 
